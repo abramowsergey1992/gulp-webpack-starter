@@ -32,6 +32,10 @@ document.querySelectorAll(".test__item").forEach((item) => {
 
 		html2canvas(iframe.contentWindow.document.documentElement, {
 			scale: 1,
+			allowTaint: true,
+			logging: true,
+			profile: true,
+			useCORS: true,
 		}).then((canvas) => {
 			canvas1.width = w;
 			canvas1.height = h;
