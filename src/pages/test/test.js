@@ -16,8 +16,11 @@ document.querySelectorAll(".test__item").forEach((item) => {
 	visibleRange.addEventListener("change", function (event) {
 		maket.style.opacity = visibleRange.value / 100;
 	});
+	diff.addEventListener("click", function (event) {
+		item.classList.add("diff-hidden");
+	});
 	shotBtn.addEventListener("click", function (event) {
-		console.log("x", iframe);
+		item.classList.remove("diff-hidden");
 		let w =
 			maket.naturalWidth > parseInt(iframe.getAttribute("width"))
 				? maket.naturalWidth
@@ -26,11 +29,7 @@ document.querySelectorAll(".test__item").forEach((item) => {
 			maket.naturalHeight > parseInt(iframe.getAttribute("height"))
 				? maket.naturalHeight
 				: parseInt(iframe.getAttribute("height"));
-		console.log(
-			maket.naturalHeight,
-			parseInt(iframe.getAttribute("height"))
-		);
-		console.log(iframe.contentWindow.document.documentElement);
+
 		html2canvas(iframe.contentWindow.document.documentElement, {
 			scale: 1,
 		}).then((canvas) => {
@@ -61,7 +60,7 @@ document.querySelectorAll(".test__item").forEach((item) => {
 				w,
 				h,
 				{
-					threshold: 0.3,
+					threshold: 0.4,
 				}
 			);
 

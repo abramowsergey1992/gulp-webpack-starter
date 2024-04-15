@@ -1,4 +1,5 @@
 
+
 //- +breadcrumb(['Main page', 'News'], 'News detail')
 mixin breadcrumb(items, last)
 	.breadcrumbs.overfolow-x
@@ -15,7 +16,7 @@ mixin test(name, title)
 	.test
 		.test__title= title
 		.test__list
-			.test__item.test__1920
+			.test__item.test__1920.diff-hidden 
 				.test__item-head
 					.test__item-width 1920px 
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
@@ -25,7 +26,7 @@ mixin test(name, title)
 					img(src="test/img/"+name+"-1920.png", alt="").test__item-maket.img1
 					canvas.test__item-diff
 			
-			.test__item.test__1440
+			.test__item.test__1440.diff-hidden 
 				.test__item-head
 					.test__item-width 1440px 
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
@@ -34,7 +35,7 @@ mixin test(name, title)
 					iframe(width="1440" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-1440.png", alt="").test__item-maket.img2
 					canvas.test__item-diff
-			.test__item.test__720
+			.test__item.test__720.diff-hidden 
 				.test__item-head
 					.test__item-width 720px 
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
@@ -43,7 +44,7 @@ mixin test(name, title)
 					iframe(width="720" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-720.png", alt="").test__item-maket
 					canvas.test__item-diff
-			.test__item.test__375  
+			.test__item.test__375.diff-hidden   
 				.test__item-head
 					.test__item-width 375px 
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")

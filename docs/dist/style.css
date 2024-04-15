@@ -147,20 +147,6 @@ p {
   color: red;
 }
 
-.primery-button {
-  border: 0 solid;
-  border-radius: 30px;
-  padding: 11px 20px 10px;
-  margin-top: 25px;
-  margin-bottom: 25px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: -.01em;
-  background: linear-gradient(92deg,#fb8129 0,#cd380e 100%);
-}
-
 .breadcrumbs {
   margin-top: 16px;
   margin-bottom: 15px;
@@ -195,6 +181,25 @@ p {
   display: none;
 }
 
+.primery-button {
+  border: 0 solid;
+  border-radius: 30px;
+  padding: 11px 20px 10px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  background: linear-gradient(92deg,#fb8129 0,#cd380e 100%);
+}
+
+.primery-button:hover {
+  background: #fb8129;
+}
+
 .test {
   padding: 30px 0 50px;
   margin-bottom: 30px;
@@ -220,7 +225,12 @@ p {
 .test__item-diff {
   position: absolute;
   left: 0;
+  cursor: not-allowed;
   top: 0;
+}
+
+.diff-hidden .test__item-diff {
+  display: none;
 }
 
 .test__item-head {

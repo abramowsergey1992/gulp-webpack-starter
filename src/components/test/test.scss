@@ -4,6 +4,8 @@
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 
+
+
 	&__list {
 		display: flex;
 		flex-direction: column;
@@ -22,7 +24,14 @@
 	&__item-diff {
 		position: absolute;
 		left: 0;
+		cursor: not-allowed;
+
+
 		top: 0;
+
+		.diff-hidden & {
+			display: none;
+		}
 	}
 
 	&__item-head {
