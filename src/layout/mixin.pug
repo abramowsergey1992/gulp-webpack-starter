@@ -23,9 +23,8 @@ mixin test(name, title)
 				.test__item-body
 					iframe(width="1920" scrolling="no"    src="test/"+name+".html" frameborder="0" ).test__item-iframe 
 					img(src="test/img/"+name+"-1920.png", alt="").test__item-maket.img1
-				.test__item-hidden
-				
-				.test__item-diff
+					canvas.test__item-diff
+			
 			.test__item.test__1440
 				.test__item-head
 					.test__item-width 1440px 
@@ -34,7 +33,7 @@ mixin test(name, title)
 				.test__item-body
 					iframe(width="1440" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-1440.png", alt="").test__item-maket.img2
-				.test__item-diff
+					canvas.test__item-diff
 			.test__item.test__720
 				.test__item-head
 					.test__item-width 720px 
@@ -43,7 +42,7 @@ mixin test(name, title)
 				.test__item-body
 					iframe(width="720" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-720.png", alt="").test__item-maket
-				.test__item-diff
+					canvas.test__item-diff
 			.test__item.test__375  
 				.test__item-head
 					.test__item-width 375px 
@@ -52,4 +51,4 @@ mixin test(name, title)
 				.test__item-body
 					iframe(width="375" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe
 					img(src="test/img/"+name+"-375.png", alt="").test__item-maket
-				.test__item-diff
+					canvas.test__item-diff

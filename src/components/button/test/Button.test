@@ -1,0 +1,3 @@
+extends ../../../layout/test
+block content 
+	button.primery-button(type='button') Все мероприятия

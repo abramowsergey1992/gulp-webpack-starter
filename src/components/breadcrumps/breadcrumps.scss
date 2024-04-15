@@ -1,5 +1,5 @@
 .breadcrumbs {
-	margin-top: 15px;
+	margin-top: 16px;
 	margin-bottom: 15px;
 
 	&__list {
@@ -23,7 +23,7 @@
 			display: inline-block;
 			color: #878787;
 			content: '/';
-			margin: 0 8px;
+			margin: 0 8px 0 9px;
 		}
 
 		&:last-child {

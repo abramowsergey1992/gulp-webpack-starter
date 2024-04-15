@@ -6,6 +6,7 @@ document.querySelectorAll(".test__item").forEach((item) => {
 	let maket = item.querySelector(".test__item-maket");
 	let shotBtn = item.querySelector(".test__item-shot");
 	let iframe = item.querySelector(".test__item-iframe");
+	let diff = item.querySelector(".test__item-diff");
 
 	iframe.onload = function () {
 		iframe.height =
@@ -29,36 +30,44 @@ document.querySelectorAll(".test__item").forEach((item) => {
 			maket.naturalHeight,
 			parseInt(iframe.getAttribute("height"))
 		);
-		console.log(w, h);
-		html2canvas(
-			document.querySelector("iframe").contentWindow.document
-				.documentElement
-		).then((canvas) => {
+		console.log(iframe.contentWindow.document.documentElement);
+		html2canvas(iframe.contentWindow.document.documentElement, {
+			scale: 1,
+		}).then((canvas) => {
+			canvas1.width = w;
+			canvas1.height = h;
+			canvas2.width = w;
+			canvas2.height = h;
 			let ctx = canvas.getContext("2d");
-			canvas.width = w;
-			canvas.height = h;
+
 			let imgData = ctx.getImageData(0, 0, w, h);
-			let booferTemplate = imgData.data;
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(maket, 0, 0);
+			let booferTemplate = imgData;
 
 			let canvasImg = document.createElement("canvas");
 			canvasImg.width = w;
 			canvasImg.height = h;
 			const ctx2 = canvasImg.getContext("2d");
 			ctx2.drawImage(maket, 0, 0);
-			const bufferImg = ctx2.getImageData(0, 0, w, h).data;
+			const bufferImg = ctx2.getImageData(0, 0, w, h);
 
-			let diff = img;
 			diff.width = w;
 			diff.height = h;
 			let diffContext = diff.getContext("2d");
 			diff = diffContext.createImageData(w, h);
-			pixelmatch(booferTemplate, bufferImg, diff.data, w, h, {
-				threshold: 0.1,
-			});
-			console.log("diff", diff);
+			let sss = pixelmatch(
+				booferTemplate.data,
+				bufferImg.data,
+				diff.data,
+				w,
+				h,
+				{
+					threshold: 0.3,
+				}
+			);
+
 			diffContext.putImageData(diff, 0, 0);
+			canvas1.getContext("2d").putImageData(booferTemplate, 0, 0);
+			canvas2.getContext("2d").putImageData(bufferImg, 0, 0);
 		});
 	});
 });

@@ -19,6 +19,12 @@
 		}
 	}
 
+	&__item-diff {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
 	&__item-head {
 		display: flex;
 		flex-direction: row;
