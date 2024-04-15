@@ -29,14 +29,17 @@ document.querySelectorAll(".test__item").forEach((item) => {
 			maket.naturalHeight > parseInt(iframe.getAttribute("height"))
 				? maket.naturalHeight
 				: parseInt(iframe.getAttribute("height"));
-
-		html2canvas(iframe.contentWindow.document.documentElement, {
-			scale: 1,
-			allowTaint: true,
-			logging: true,
-			profile: true,
-			useCORS: true,
-		}).then((canvas) => {
+		console.log(iframe.contentWindow.document.documentElement);
+		html2canvas(
+			iframe.contentWindow.document.documentElement.querySelector("body"),
+			{
+				scale: 1,
+				allowTaint: true,
+				logging: true,
+				profile: true,
+				useCORS: true,
+			}
+		).then((canvas) => {
 			canvas1.width = w;
 			canvas1.height = h;
 			canvas2.width = w;
