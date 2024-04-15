@@ -18,7 +18,8 @@ const gcmq = require("gulp-group-css-media-queries");
 const sass = require("gulp-sass")(require("sass"));
 const webpack = require("webpack-stream");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { error } = require("console");
+const rename = require("gulp-rename");
+const postcssCustomMedia = require("postcss-custom-media");
 
 global.app = {
 	isDev: process.argv.includes("--build"),
@@ -32,11 +33,13 @@ function getFolders(dir) {
 	});
 }
 
-const buildFolder = "./docs";
-const srcFolder = "./src";
+const buildFolder = "docs";
+const srcFolder = "src";
 var p = {
 	docs: {
 		html: `${buildFolder}/`,
+		test: `${buildFolder}/test/`,
+		testimg: `${buildFolder}/test/img/`,
 		js: `${buildFolder}/dist/`,
 		json: `${buildFolder}/json/`,
 		css: `${buildFolder}/dist/`,
@@ -47,8 +50,10 @@ var p = {
 	},
 	src: {
 		layout_pug: `${srcFolder}/layout/*.pug`,
+		test_pug: `${srcFolder}/**/*.test`,
 		mixin_pug: `${srcFolder}/**/*.mixin`,
 		indexStyle: `${srcFolder}/layout/css/index.scss`,
+		css: `${srcFolder}/layout/css/`,
 		style: `${srcFolder}/layout/css/*.scss`,
 		pages: `${srcFolder}/pages`,
 		conponents: `${srcFolder}/components`,
@@ -57,11 +62,29 @@ var p = {
 		video: `${srcFolder}/**/*.{mp4,avi}`,
 		fonts: `${srcFolder}/fonts/*.*`,
 		img: `${srcFolder}/**/*.svg`,
-		js: `${srcFolder}/**/*.js`,
-		webp: `${srcFolder}/**/*.{png,jpg}`,
+		testjs: [`${srcFolder}/**/test.js`],
+		js: [`${srcFolder}/**/*.js`, `!${srcFolder}/**/test.js`],
+		webp: [
+			`${srcFolder}/**/*.{png,jpg}`,
+			`!${srcFolder}/**/test/*.{png,jpg,webp}`,
+		],
+		testimg: `${srcFolder}/**/test/*.{png,jpg,webp}`,
 	},
 	clean: `${buildFolder}`,
 };
+
+//сервер
+gulp.task("server", function () {
+	browserSync.init({
+		server: {
+			baseDir: `${buildFolder}`,
+		},
+	});
+	gulp.watch(`${buildFolder}/**/*.{html,css,js}`).on(
+		"change",
+		browserSync.reload
+	);
+});
 
 // удаление папки `${buildFolder}`
 gulp.task("clean", function () {
@@ -83,6 +106,27 @@ gulp.task("page-mixin", function (done) {
 		)
 		.pipe(concat("mixin.pug"))
 		.pipe(gulp.dest(`${srcFolder}/layout`));
+});
+//Сбор миксинов
+gulp.task("page-test", function (done) {
+	return gulp
+		.src(p.src.test_pug)
+
+		.pipe(
+			plumber({
+				errorHandler: notify.onError({
+					title: "Template",
+					message: "<%= error.message %>",
+				}),
+			})
+		)
+		.pipe(pug({ pretty: true }))
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
+		.pipe(gulp.dest(p.docs.test));
 });
 
 //Сбор всех html
@@ -143,7 +187,10 @@ gulp.task("page-pug", function (done) {
 gulp.task("scss", function (done) {
 	return gulp
 		.src([
-			p.src.indexStyle,
+			p.src.css + "/reset.scss",
+			p.src.css + "/fonts.scss",
+			p.src.css + "/layout.scss",
+			p.src.css + "/typography.scss",
 			p.src.conponents + "/**/*.scss",
 			p.src.pages + "/**/*.scss",
 		])
@@ -162,20 +209,8 @@ gulp.task("scss", function (done) {
 		.pipe(ifPlugin(app.isBuild, gcmq()))
 		.pipe(ifPlugin(app.isDev, sourseMaps.write()))
 		.pipe(ifPlugin(app.isDev, sourseMaps.write()))
+		.pipe(browserSync.stream())
 		.pipe(gulp.dest(p.docs.css));
-});
-
-//сервер
-gulp.task("server", function () {
-	browserSync.init({
-		server: {
-			baseDir: `${buildFolder}`,
-		},
-	});
-	gulp.watch(`${buildFolder}/**/*.{html,css,js}`).on(
-		"change",
-		browserSync.reload
-	);
 });
 
 gulp.task("listing", function (done) {
@@ -215,7 +250,14 @@ gulp.task("audio", function () {
 
 // обработка video
 gulp.task("video", function () {
-	return gulp.src(p.src.video).pipe(gulp.dest(p.docs.video));
+	return gulp
+		.src(p.src.video)
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
+		.pipe(gulp.dest(p.docs.video));
 });
 
 // обработка fonts
@@ -228,12 +270,39 @@ gulp.task("img", function () {
 	return gulp
 		.src(p.src.img)
 		.pipe(newer(p.docs.img))
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
 		.pipe(gulp.dest(p.docs.img));
+});
+
+// обработка всех test img
+gulp.task("test-img", function () {
+	return gulp
+		.src(p.src.testimg)
+		.pipe(newer(p.docs.testimg))
+		.pipe(webp({ quality: 100 }))
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
+		.pipe(gulp.dest(p.docs.testimg));
 });
 
 // обработка всех WEBP
 gulp.task("webp-all", function () {
-	return gulp.src(p.src.webp).pipe(webp()).pipe(gulp.dest(p.docs.img));
+	return gulp
+		.src(p.src.webp)
+		.pipe(webp())
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
+		.pipe(gulp.dest(p.docs.img));
 });
 
 // обработка новых WEBP
@@ -242,6 +311,11 @@ gulp.task("webp", function () {
 		.src(p.src.webp)
 		.pipe(newer(p.docs.img))
 		.pipe(webp())
+		.pipe(
+			rename({
+				dirname: "",
+			})
+		)
 		.pipe(gulp.dest(p.docs.img));
 });
 
@@ -348,8 +422,16 @@ gulp.task("create", function (done) {
 
 gulp.task("watch", function () {
 	gulp.watch(p.src.js, gulp.parallel("js"));
-	gulp.watch(p.src.mixin_pug, gulp.parallel("page-mixin"));
-	gulp.watch(p.src.layout_pug, gulp.parallel("pages-pug"));
+	gulp.watch(p.src.testjs, gulp.parallel("test-js"));
+	gulp.watch(
+		[p.src.test_pug, p.src.mixin_pug],
+		gulp.parallel(["page-mixin", "page-test"])
+	);
+
+	gulp.watch(
+		[p.src.layout_pug, p.src.conponents + "/**/*.pug"],
+		gulp.parallel("pages-pug")
+	);
 	gulp.watch(p.src.pages + "/**/*.pug", gulp.parallel("page-pug"));
 	gulp.watch(
 		[
@@ -360,6 +442,7 @@ gulp.task("watch", function () {
 		gulp.parallel("scss")
 	);
 	gulp.watch(p.src.img, gulp.parallel("img"));
+	gulp.watch(p.src.testimg, gulp.parallel("test-img"));
 	gulp.watch(p.src.webp, gulp.parallel("webp"));
 	gulp.watch(p.src.json, gulp.parallel("json"));
 	gulp.watch(p.src.audio, gulp.parallel("audio"));
@@ -440,6 +523,66 @@ gulp.task("js", function () {
 		)
 		.pipe(gulp.dest(p.docs.js));
 });
+gulp.task("test-js", function () {
+	return gulp
+		.src(p.src.testjs)
+		.pipe(
+			plumber({
+				errorHandler: notify.onError({
+					title: "JavaScript",
+					message: "<%= error.message %>",
+				}),
+			})
+		)
+		.pipe(
+			webpack({
+				mode: app.isBuild ? "development" : "production",
+				entry: {
+					main: "./src/pages/test/test.js",
+				},
+
+				output: {
+					filename: "test.js",
+					chunkFilename: "[name].js",
+					publicPath: "/",
+				},
+
+				// plugins: [new MiniCssExtractPlugin()],
+				module: {
+					rules: [
+						{
+							test: /\.js$/,
+							exclude: /node_modules/,
+							use: {
+								loader: require.resolve("babel-loader"),
+								options: {
+									presets: [
+										[
+											"@babel/preset-env",
+											{ modules: false },
+										],
+									],
+								},
+							},
+						},
+						// {
+						// 	test: /\.css$/i,
+						// 	use: [MiniCssExtractPlugin.loader, "css-loader"],
+						// },
+					],
+				},
+
+				// resolve: {
+				// 	alias: {
+				// 		Pages: path.resolve(__dirname, "src/pages"),
+				// 		Components: path.resolve(__dirname, "src/components"),
+				// 	},
+				// },
+			})
+		)
+		.pipe(gulp.dest(p.docs.js));
+});
+
 gulp.task(
 	"build",
 	gulp.series(

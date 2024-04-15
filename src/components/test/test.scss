@@ -1,0 +1,60 @@
+.test {
+	padding: 30px 0 50px;
+	margin-bottom: 30px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	&__item {
+		position: relative;
+		line-height: 0;
+
+		iframe {
+			box-shadow: 0 0 0 1px #ccc;
+		}
+	}
+
+	&__item-head {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 10px;
+	}
+
+	&__item-body {
+		position: relative;
+	}
+
+	&__item-shot {
+		border: 1px solid #ccc;
+		padding: 5px;
+		display: block;
+		line-height: 120%;
+		border-radius: 5px;
+		font-size: 12px;
+		cursor: pointer;
+	}
+
+	&__item-maket {
+		position: absolute;
+		left: 0;
+		top: 0;
+		pointer-events: none;
+	}
+
+	&__item-width {
+		font-size: 12px;
+	}
+
+	&__title {
+		font-size: 30px;
+		margin-bottom: 15px;
+	}
+
+}

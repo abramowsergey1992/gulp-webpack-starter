@@ -1,16 +1,3 @@
-
-//- +breadcrumb(['Main page', 'News'], 'News detail')
-mixin breadcrumb(items, last)
-	.breadcrumbs.overfolow-x
-		ul.breadcrumbs__list&attributes(attributes)
-			each item in items
-				li.breadcrumbs__item
-					a(href="#" title=item).breadcrumb__link= item
-
-			if last
-				li.breadcrumbs__item 
-					span.breadcrumb__link-current= last
-			else
 mixin test(name, title)
 	.test
 		.test__title= title

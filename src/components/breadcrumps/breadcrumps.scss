@@ -1,0 +1,36 @@
+.breadcrumbs {
+	margin-top: 15px;
+	margin-bottom: 15px;
+
+	&__list {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	&__item {
+		color: #878787;
+		font-weight: 400;
+		font-size: 16px;
+		line-height: 136%;
+
+		a {
+			color: #fb8129;
+			text-decoration: none;
+		}
+
+		&::after {
+			display: inline-block;
+			color: #878787;
+			content: '/';
+			margin: 0 8px;
+		}
+
+		&:last-child {
+			&::after {
+				display: none;
+			}
+		}
+	}
+
+}
