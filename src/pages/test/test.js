@@ -30,16 +30,13 @@ document.querySelectorAll(".test__item").forEach((item) => {
 				? maket.naturalHeight
 				: parseInt(iframe.getAttribute("height"));
 		console.log(iframe.contentWindow.document.documentElement);
-		html2canvas(
-			iframe.contentWindow.document.documentElement.querySelector("body"),
-			{
-				scale: 1,
-				allowTaint: true,
-				logging: true,
-				profile: true,
-				useCORS: true,
-			}
-		).then((canvas) => {
+		html2canvas(item.querySelector(".test__item-body"), {
+			scale: 1,
+			allowTaint: true,
+			logging: true,
+			profile: true,
+			useCORS: true,
+		}).then((canvas) => {
 			canvas1.width = w;
 			canvas1.height = h;
 			canvas2.width = w;

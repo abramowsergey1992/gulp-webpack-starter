@@ -8,7 +8,8 @@ mixin test(name, title)
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
 					buttom(type="button").test__item-shot Проверить
 				.test__item-body
-					iframe(width="1920" scrolling="no"    src="test/"+name+".html" frameborder="0" ).test__item-iframe 
+					.test__item-iframe-wrap
+						iframe(width="1920" scrolling="no"    src="test/"+name+".html" frameborder="0" ).test__item-iframe 
 					img(src="test/img/"+name+"-1920.png", alt="").test__item-maket.img1
 					canvas.test__item-diff
 			
@@ -18,7 +19,8 @@ mixin test(name, title)
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
 					buttom(type="button").test__item-shot Проверить
 				.test__item-body
-					iframe(width="1440" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
+					.test__item-iframe-wrap
+						iframe(width="1440" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-1440.png", alt="").test__item-maket.img2
 					canvas.test__item-diff
 			.test__item.test__720.diff-hidden 
@@ -27,7 +29,8 @@ mixin test(name, title)
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
 					buttom(type="button").test__item-shot Проверить
 				.test__item-body
-					iframe(width="720" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
+					.test__item-iframe-wrap
+						iframe(width="720" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
 					img(src="test/img/"+name+"-720.png", alt="").test__item-maket
 					canvas.test__item-diff
 			.test__item.test__375.diff-hidden   
@@ -36,6 +39,7 @@ mixin test(name, title)
 					input.test__item-opacity(min="0" max="100" value="0"  type="range")
 					buttom(type="button").test__item-shot Проверить
 				.test__item-body
-					iframe(width="375" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe
+					.test__item-iframe-wrap
+						iframe(width="375" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe
 					img(src="test/img/"+name+"-375.png", alt="").test__item-maket
 					canvas.test__item-diff
