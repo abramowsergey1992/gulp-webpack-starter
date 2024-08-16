@@ -19,6 +19,22 @@
 		iframe {
 			box-shadow: 0 0 0 1px #ccc;
 		}
+
+		&.test__1920 {
+			width: 1920px;
+		}
+
+		&.test__1366 {
+			width: 1366px;
+		}
+
+		&.test__768 {
+			width: 768px;
+		}
+
+		&.test__360 {
+			width: 360px;
+		}
 	}
 
 	&__item-diff {
@@ -46,6 +62,18 @@
 		position: relative;
 	}
 
+	&__item-lock {
+		opacity: 0.5;
+
+		.test__item:has(.test__item-maket._lock) & {
+			opacity: 1;
+		}
+
+		svg {
+			width: 15px;
+		}
+	}
+
 	&__item-shot {
 		border: 1px solid #ccc;
 		padding: 5px;
@@ -53,14 +81,25 @@
 		line-height: 120%;
 		border-radius: 5px;
 		font-size: 12px;
-		cursor: pointer;
+
 	}
 
 	&__item-maket {
 		position: absolute;
 		left: 0;
 		top: 0;
-		pointer-events: none;
+		width: 100%;
+		cursor: grab;
+		opacity: var(--test-opacity);
+		box-shadow: 0 0 0 1px red;
+
+		._test-lock & {
+			pointer-events: none;
+		}
+
+		._test-invert & {
+			filter: invert(1);
+		}
 	}
 
 	&__item-width {
@@ -72,4 +111,46 @@
 		margin-bottom: 15px;
 	}
 
+}
+
+html {
+	--test-opacity: 0.5
+}
+
+.test-bottom {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+	width: 100%;
+	box-shadow: 0 0 8px 0px #000;
+	background: #fff;
+	background: antiquewhite;
+	gap: 20px;
+
+	svg {
+		width: 20px;
+	}
+
+	&__lock {
+		cursor: pointer;
+		opacity: 0.5;
+
+		._test-lock & {
+			opacity: 1;
+		}
+
+
+	}
+
+	&__invert {
+		opacity: 0.6;
+		cursor: pointer;
+
+		._test-invert & {
+			opacity: 1;
+		}
+	}
 }

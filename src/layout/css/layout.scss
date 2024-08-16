@@ -1,8 +1,72 @@
 body {
-	font-family: Arial, Helvetica, sans-serif;
+	--inner-padding: 60px;
+	--body-bg: #F5F7F9;
+	--c-text: #002155;
+	--c-hover: #7F30FF;
+	--c-text2: #8090AA;
+	--border-radius: 10px;
+	--backgrpaund-block-bg: rgba(0, 33, 85, 0.7);
+	--backgrpaund-block-color: 10px;
+	background-color: var(--body-bg);
+	font-family: 'Neue Machina';
+	color: var(--c-text);
 
+	@include mediaMedium() {
+		--inner-padding: 40px;
+	}
+
+	@include mediaTablet() {
+		--inner-padding: 30px;
+	}
+
+	@include mediaMobile() {
+		--inner-padding: 20px;
+	}
+}
+
+* {
+	font-family: 'Neue Machina';
+}
+
+a {
+	color: var(--c-text);
+	transition: color 0.3s;
+	text-decoration: none;
+}
+
+.page {
+	padding-top: 112px;
 }
 
 .inner {
-	padding: 0 30px;
+	padding: 0 var(--inner-padding);
+
+}
+
+._large-hidden {
+	@media (min-width: #{$medium-width}) {
+		display: none !important;
+	}
+}
+
+._medium-hidden {
+	@media (min-width: #{$tablet-width}) and (max-width: #{$medium-width}) {
+		display: none !important;
+	}
+}
+
+._tablet-hidden {
+	@media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width}) {
+		display: none !important;
+	}
+}
+
+._mobile-hidden {
+	@include mediaMobile {
+		display: none !important;
+	}
+}
+
+img {
+	max-width: 100%;
 }

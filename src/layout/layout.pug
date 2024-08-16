@@ -1,7 +1,7 @@
 include mixin
 
 doctype html
-html(lang="ru")
+html#html(lang="ru")
 	block head
 		head
 			meta(charset="utf-8")
@@ -21,11 +21,11 @@ html(lang="ru")
 			<meta name="msapplication-TileColor" content="#2b5797">
 			<meta name="theme-color" content="#ffffff">
 	body
-		include ../components/header/header
+		+header()
 		.page
-			.inner
+			.inner 
 				block content
-		include ../components/footer/footer
+		+footer()
 		block popup
 		block scripts
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">

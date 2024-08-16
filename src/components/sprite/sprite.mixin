@@ -1,0 +1,3 @@
+mixin  sprite(icon)
+	svg.svg-icon&attributes(attributes)
+		use(xlink:href="sprite.svg#"+icon)

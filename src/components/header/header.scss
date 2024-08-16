@@ -1,0 +1,181 @@
+.header {
+	padding: 20px 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+
+	.test-page & {
+		position: relative;
+	}
+
+	&__block {
+		border-radius: var(--border-radius);
+		background: #fff;
+
+
+
+		padding: 17px 33px;
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		align-items: center;
+
+		@include mediaMedium() {
+			padding: 16px 20px;
+		}
+
+		@include mediaMobile() {
+			padding: 20px;
+		}
+	}
+
+	&__logo {
+		margin-right: auto;
+
+		@include mediaMobile() {
+
+			img,
+			svg {
+				max-width: 133px
+			}
+		}
+	}
+
+	&__menu {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		gap: 19px;
+		display: flex;
+		flex-direction: row;
+		transform: translateX(-50%) translateY(-50%);
+
+		@include mediaTablet {
+			display: none;
+		}
+
+		&>li {
+			position: relative;
+
+			&:has(.header__menu-level-2) {
+				&::after {
+					display: inline-block;
+					content: '';
+					width: 5px;
+					margin-left: 2px;
+					height: 5px;
+					margin-top: -5px;
+					position: relative;
+					top: -2px;
+					border-bottom: 1px solid;
+					border-left: 1px solid;
+					transition: all 0.3s;
+					transform: rotate(-45deg);
+				}
+
+				&:hover::after {
+					top: 0px;
+					transform: rotate(135deg);
+				}
+			}
+		}
+
+	}
+
+	&__menu-link-1 {
+		font-weight: 500;
+		font-size: 14px;
+		letter-spacing: -0.02em;
+		text-decoration: none;
+		color: var(--c-text);
+
+
+
+		&:hover {
+			color: var(--c-hover);
+		}
+	}
+
+	&__menu-level-2 {
+		position: absolute;
+	}
+
+	&__menu-level-2 {
+		display: none;
+	}
+
+	&__auth {
+		display: flex;
+		flex-direction: row;
+
+		@include mediaMobile {
+			display: none;
+		}
+
+		li,
+		a {
+			font-weight: 500;
+			font-size: 14px;
+			letter-spacing: -0.02em;
+			color: var(--c-text);
+			text-decoration: none;
+
+
+		}
+
+		a {
+			&:hover {
+				color: var(--c-hover);
+			}
+		}
+
+		li {
+			&::after {
+				display: inline-block;
+				content: "/";
+				margin-left: 2px;
+				margin-right: 2px;
+			}
+
+			&:last-child::after {
+				display: none;
+			}
+		}
+
+	}
+
+	&__burger {
+		border: 0 solid;
+		padding: 0;
+		background: transparent;
+		width: 30px;
+		height: 30px;
+		position: relative;
+		display: none;
+		margin-top: -10px;
+		margin-bottom: -10px;
+
+		@include mediaTablet {
+			display: block;
+		}
+
+		span {
+			width: 18px;
+			height: 2px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			background: var(--c-text);
+
+			&:nth-child(1) {
+				transform: translateX(-50%) translateY(-6px);
+			}
+
+			&:nth-child(3) {
+				transform: translateX(-50%) translateY(4px);
+			}
+		}
+	}
+}

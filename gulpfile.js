@@ -20,10 +20,10 @@ const webpack = require("webpack-stream");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const rename = require("gulp-rename");
 const postcssCustomMedia = require("postcss-custom-media");
-
+const svgSprite = require("gulp-svg-sprite");
 global.app = {
-	isDev: process.argv.includes("--build"),
-	isBuild: !process.argv.includes("--build"),
+	isDev: !process.argv.includes("--build"),
+	isBuild: process.argv.includes("--build"),
 };
 
 // получение папок
@@ -49,6 +49,7 @@ var p = {
 		fonts: `${buildFolder}/fonts/`,
 	},
 	src: {
+		icons: `${srcFolder}/sprites/*.svg`,
 		layout_pug: `${srcFolder}/layout/*.pug`,
 		test_pug: `${srcFolder}/**/*.test`,
 		mixin_pug: `${srcFolder}/**/*.mixin`,
@@ -60,8 +61,12 @@ var p = {
 		json: `${srcFolder}/**/*.json`,
 		audio: `${srcFolder}/**/*.{mp3,wav,flac}`,
 		video: `${srcFolder}/**/*.{mp4,avi}`,
-		fonts: `${srcFolder}/fonts/*.*`,
-		img: `${srcFolder}/**/*.svg`,
+		fonts: [`${srcFolder}/fonts/*.*`],
+		img: [
+			`${srcFolder}/**/*.svg`,
+			`!${srcFolder}/sprites/*.*`,
+			`!${srcFolder}/fonts/*.*`,
+		],
 		testjs: [`${srcFolder}/**/test.js`],
 		js: [`${srcFolder}/**/*.js`, `!${srcFolder}/**/test.js`],
 		webp: [
@@ -123,10 +128,40 @@ gulp.task("page-test", function (done) {
 		.pipe(pug({ pretty: true }))
 		.pipe(
 			rename({
+				prefix: "_test-",
 				dirname: "",
 			})
 		)
-		.pipe(gulp.dest(p.docs.test));
+		.pipe(gulp.dest(p.docs.html));
+});
+
+let svgspriteConfig = {
+	shape: {
+		dimension: {
+			// Set maximum dimensions
+			maxWidth: 500,
+			maxHeight: 500,
+		},
+		spacing: {
+			// Add padding
+			padding: 0,
+		},
+	},
+	mode: {
+		symbol: {
+			dest: ".",
+			sprite: "sprite.svg",
+		},
+	},
+};
+
+gulp.task("svg-sprite", function (done) {
+	return gulp
+		.src(p.src.icons)
+
+		.pipe(svgSprite(svgspriteConfig))
+		.pipe(gulp.dest(`${buildFolder}`));
+	done();
 });
 
 //Сбор всех html
@@ -187,9 +222,11 @@ gulp.task("page-pug", function (done) {
 gulp.task("scss", function (done) {
 	return gulp
 		.src([
+			p.src.css + "/mixin.scss",
 			p.src.css + "/reset.scss",
 			p.src.css + "/fonts.scss",
 			p.src.css + "/layout.scss",
+
 			p.src.css + "/typography.scss",
 			p.src.conponents + "/**/*.scss",
 			p.src.pages + "/**/*.scss",
@@ -217,7 +254,7 @@ gulp.task("listing", function (done) {
 	var content =
 		"<html><head><meta content='width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'></head><body style='background:#212121'><style>a{font-family: Arial; color: white;font-size: 17px; }ul{   color: #fff; max-width:1000px; list-style: square; margin: 30px auto; border: 1px solid #00ff7e;  padding: 10px 40px;box-sizing: border-box;} a:hover{text-decoration:none;}</style><ul style=''>";
 	fs.readdirSync(`${buildFolder}`).forEach((file) => {
-		if (file.split(".").pop() == "html") {
+		if (file.split(".").pop() == "html" && file.indexOf("_test-")) {
 			content =
 				content +
 				"<li  style='margin:15px 0'>  <a href='" +
@@ -423,6 +460,7 @@ gulp.task("create", function (done) {
 gulp.task("watch", function () {
 	gulp.watch(p.src.js, gulp.parallel("js"));
 	gulp.watch(p.src.testjs, gulp.parallel("test-js"));
+	gulp.watch(p.src.icons, gulp.parallel("svg-sprite"));
 	gulp.watch(
 		[p.src.test_pug, p.src.mixin_pug],
 		gulp.parallel(["page-mixin", "page-test"])
@@ -589,6 +627,7 @@ gulp.task(
 		"clean",
 		"scss",
 		"js",
+		"svg-sprite",
 		"pages-pug",
 		"webp",
 		"img",

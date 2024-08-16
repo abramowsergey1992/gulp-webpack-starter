@@ -5,9 +5,9 @@ mixin breadcrumb(items, last)
 		ul.breadcrumbs__list&attributes(attributes)
 			each item in items
 				li.breadcrumbs__item
-					a(href="#" title=item).breadcrumb__link= item
+					a(href="#" title=item).breadcrumbs__link= item
 
 			if last
 				li.breadcrumbs__item 
-					span.breadcrumb__link-current= last
+					span.breadcrumbs__link-current= last
 			else

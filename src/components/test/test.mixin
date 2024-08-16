@@ -1,45 +1,39 @@
 mixin test(name, title)
-	.test
+	.test(id="test-"+name)
 		.test__title= title
 		.test__list
 			.test__item.test__1920.diff-hidden 
 				.test__item-head
 					.test__item-width 1920px 
-					input.test__item-opacity(min="0" max="100" value="0"  type="range")
-					buttom(type="button").test__item-shot Проверить
+				
 				.test__item-body
-					.test__item-iframe-wrap
-						iframe(width="1920" scrolling="no"    src="test/"+name+".html" frameborder="0" ).test__item-iframe 
-					img(src="test/img/"+name+"-1920.png", alt="").test__item-maket.img1
-					canvas.test__item-diff
+					.test__item-iframe-wrap 
+						iframe(width="1920" scrolling="no"    src="_test-"+name+".html" frameborder="0" ).test__item-iframe 
+					img(src="test/img/"+name+"-1920.webp", alt="").test__item-maket.img1._lock
+		
 			
-			.test__item.test__1440.diff-hidden 
+			.test__item.test__1366.diff-hidden 
 				.test__item-head
-					.test__item-width 1440px 
-					input.test__item-opacity(min="0" max="100" value="0"  type="range")
-					buttom(type="button").test__item-shot Проверить
+					.test__item-width 1366px 
+			
 				.test__item-body
 					.test__item-iframe-wrap
-						iframe(width="1440" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
-					img(src="test/img/"+name+"-1440.png", alt="").test__item-maket.img2
-					canvas.test__item-diff
-			.test__item.test__720.diff-hidden 
+						iframe(width="1366" scrolling="no"   src="_test-"+name+".html"  frameborder="0").test__item-iframe 
+					img(src="test/img/"+name+"-1366.webp", alt="").test__item-maket.img2._lock
+					//- canvas.test__item-diff
+			.test__item.test__768.diff-hidden 
 				.test__item-head
-					.test__item-width 720px 
-					input.test__item-opacity(min="0" max="100" value="0"  type="range")
-					buttom(type="button").test__item-shot Проверить
+					.test__item-width 768px 
 				.test__item-body
 					.test__item-iframe-wrap
-						iframe(width="720" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe 
-					img(src="test/img/"+name+"-720.png", alt="").test__item-maket
-					canvas.test__item-diff
-			.test__item.test__375.diff-hidden   
+						iframe(width="768" scrolling="no"   src="_test-"+name+".html"  frameborder="0").test__item-iframe 
+					img(src="test/img/"+name+"-768.webp", alt="").test__item-maket._lock
+					//- canvas.test__item-diff
+			.test__item.test__360.diff-hidden   
 				.test__item-head
-					.test__item-width 375px 
-					input.test__item-opacity(min="0" max="100" value="0"  type="range")
-					buttom(type="button").test__item-shot Проверить
+					.test__item-width 360px 
 				.test__item-body
 					.test__item-iframe-wrap
-						iframe(width="375" scrolling="no"   src="test/"+name+".html"  frameborder="0").test__item-iframe
-					img(src="test/img/"+name+"-375.png", alt="").test__item-maket
-					canvas.test__item-diff
+						iframe(width="360" scrolling="no"   src="_test-"+name+".html"  frameborder="0").test__item-iframe
+					img(src="test/img/"+name+"-360.webp", alt="").test__item-maket._lock
+					//- canvas.test__item-diff
